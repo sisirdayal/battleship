@@ -1,11 +1,8 @@
-﻿using System.Linq;
-
-namespace Battleship.GameController
+﻿namespace Battleship.GameController
 {
+    using Battleship.GameController.Contracts;
     using System;
     using System.Collections.Generic;
-
-    using Battleship.GameController.Contracts;
 
     /// <summary>
     ///     The game controller.
@@ -65,10 +62,10 @@ namespace Battleship.GameController
         {
             return new List<Ship>()
                        {
-                           new Ship() { Name = "Aircraft Carrier", Size = 5, Color = ConsoleColor.Blue }, 
-                           new Ship() { Name = "Battleship", Size = 4, Color = ConsoleColor.Red }, 
-                           new Ship() { Name = "Submarine", Size = 3, Color = ConsoleColor.Gray }, 
-                           new Ship() { Name = "Destroyer", Size = 3, Color = ConsoleColor.Yellow }, 
+                           new Ship() { Name = "Aircraft Carrier", Size = 5, Color = ConsoleColor.Blue },
+                           new Ship() { Name = "Battleship", Size = 4, Color = ConsoleColor.Red },
+                           new Ship() { Name = "Submarine", Size = 3, Color = ConsoleColor.Gray },
+                           new Ship() { Name = "Destroyer", Size = 3, Color = ConsoleColor.Yellow },
                            new Ship() { Name = "Patrol Boat", Size = 2, Color = ConsoleColor.Green }
                        };
         }
@@ -84,7 +81,10 @@ namespace Battleship.GameController
         /// </returns>
         public static bool IsShipValid(Ship ship)
         {
-            return ship.Positions.Count == ship.Size;
+            bool validity = true;
+            if (ship.Positions.Count != ship.Size)
+                validity = false;
+            return validity;
         }
 
         public static Position GetRandomPosition(int size)
@@ -95,5 +95,5 @@ namespace Battleship.GameController
             var position = new Position(letter, number);
             return position;
         }
-     }
+    }
 }
