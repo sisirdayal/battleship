@@ -19,7 +19,7 @@ jobs:
   build:
 
     name: build-and-test
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
