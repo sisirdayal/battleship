@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-
-namespace Battleship.GameController.Contracts
+﻿namespace Battleship.GameController.Contracts
 {
     using System;
     using System.Collections.Generic;
@@ -64,6 +61,8 @@ namespace Battleship.GameController.Contracts
                 Positions = new List<Position>();
             }
 
+            if (input.Length != 2)
+                throw new Exception();
             var letter = (Letters)Enum.Parse(typeof(Letters), input.ToUpper().Substring(0, 1));
             var number = int.Parse(input.Substring(1, 1));
             Positions.Add(new Position { Column = letter, Row = number });
