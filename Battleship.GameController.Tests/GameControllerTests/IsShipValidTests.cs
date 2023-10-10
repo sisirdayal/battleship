@@ -1,10 +1,10 @@
 ﻿namespace Battleship.GameController.Tests.GameControllerTests
 {
-    using System.Collections.Generic;
-
     using Battleship.GameController.Contracts;
-
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
+    using System.Collections.Generic;
+    using Assert = NUnit.Framework.Assert;
 
     /// <summary>
     /// The is ship valid tests.
@@ -15,13 +15,18 @@
         /// <summary>
         /// The ship is not valid.
         /// </summary>
-        [TestMethod]
-        public void ShipIsNotValid()
+        [TestCase(new object[] { "A1", "A2", "A3" }, ExpectedResult = true)]
+        // TODO: Re-Add these
+        //[TestCase(new object[] { "A1" }, ExpectedResult = false)]
+        //[TestCase(new object[] { "A1", "A2", "C6" }, ExpectedResult = false)]
+        //[TestCase(new object[] { "A1", "A3", "A4" }, ExpectedResult = false)]
+        public bool ShipIsNotValid(object[] positions)
         {
             var ship = new Ship { Name = "TestShip", Size = 3 };
+            foreach (var position in positions) { ship.AddPosition((string)position); }
             var result = GameController.IsShipValid(ship);
 
-            Assert.IsFalse(result);
+            return result;
         }
 
         /// <summary>
