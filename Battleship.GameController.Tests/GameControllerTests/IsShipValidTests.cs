@@ -18,6 +18,7 @@
         [TestCase(new object[] { "A1", "A2", "A3" }, ExpectedResult = true)]
         [TestCase(new object[] { "A1" }, ExpectedResult = false)]
         [TestCase(new object[] { "A1", "A2", "C6" }, ExpectedResult = false)]
+        [TestCase(new object[] { "A1", "A3", "A4" }, ExpectedResult = false)]
         public bool ShipIsNotValid(object[] positions)
         {
             var ship = new Ship { Name = "TestShip", Size = 3 };
