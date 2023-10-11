@@ -162,9 +162,9 @@ namespace Battleship.Ascii
 
                     // do
                     // {
-                        Console.WriteLine("Enter position {0} of {1} (i.e A3):", i, ship.Size);
-                        position = Console.ReadLine();
-                        ship.AddPosition(position);
+                        // Console.WriteLine("Enter position {0} of {1} (i.e A3):", i, ship.Size);
+                        // position = Console.ReadLine();
+                        // ship.AddPosition(position);
 
                         // Check if the ship's positions are valid (horizontal or vertical without gaps).
                     //     isValidPosition = ship.ArePositionsValid();
