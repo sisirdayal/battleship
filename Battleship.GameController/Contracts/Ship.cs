@@ -68,6 +68,64 @@
             Positions.Add(new Position { Column = letter, Row = number });
         }
 
+        public bool ArePositionsValid()
+        {
+            if (Positions.Count < 2)
+            {
+                // If the ship has only one position, it's valid.
+                return true;
+            }
+
+            // Check if all positions have the same row (for horizontal) or the same column (for vertical).
+            var firstPosition = Positions[0];
+            bool isHorizontal = true;
+            bool isVertical = true;
+
+            for (int i = 1; i < Positions.Count; i++)
+            {
+                if (Positions[i].Row != firstPosition.Row)
+                {
+                    isHorizontal = false;
+                }
+
+                if (Positions[i].Column != firstPosition.Column)
+                {
+                    isVertical = false;
+                }
+            }
+
+            // Check for gaps in horizontal positions.
+            if (isHorizontal)
+            {
+                var orderedPositions = Positions.OrderBy(p => p.Column).ToList();
+                for (int i = 1; i < orderedPositions.Count; i++)
+                {
+                    if (orderedPositions[i].Column != orderedPositions[i - 1].Column + 1)
+                    {
+                        return false; // There's a gap in horizontal positions.
+                    }
+                }
+            }
+
+            // Check for gaps in vertical positions.
+            if (isVertical)
+            {
+                var orderedPositions = Positions.OrderBy(p => p.Row).ToList();
+                for (int i = 1; i < orderedPositions.Count; i++)
+                {
+                    if (orderedPositions[i].Row != orderedPositions[i - 1].Row + 1)
+                    {
+                        return false; // There's a gap in vertical positions.
+                    }
+                }
+            }
+
+            // The ship is valid if it's either horizontal or vertical without gaps.
+            return isHorizontal || isVertical;
+        }
+
+
+
         public bool IsPlaced
         {
             get { return isPlaced; }

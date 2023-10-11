@@ -84,6 +84,11 @@
             bool validity = true;
             if (ship.Positions.Count != ship.Size)
                 validity = false;
+                 
+            if(!ship.ArePositionsValid()){
+                validity = false;
+            }
+
             return validity;
         }
 
