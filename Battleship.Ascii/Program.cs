@@ -156,26 +156,26 @@ namespace Battleship.Ascii
                 
                 for (var i = 1; i <= ship.Size; i++)
                 {
-                    bool isValidPosition = false;
+                    // bool isValidPosition = false;
                     string position;
 
-                    do
-                    {
+                    // do
+                    // {
                         Console.WriteLine("Enter position {0} of {1} (i.e A3):", i, ship.Size);
                         position = Console.ReadLine();
                         ship.AddPosition(position);
 
                         // Check if the ship's positions are valid (horizontal or vertical without gaps).
-                        isValidPosition = ship.ArePositionsValid();
+                    //     isValidPosition = ship.ArePositionsValid();
 
-                        if (!isValidPosition)
-                        {
-                            Console.WriteLine("Invalid ship position. Please try again.");
-                            ship.Positions.Clear(); // Clear invalid positions.
-                            i = 1;
-                        }
-                    }
-                    while (!isValidPosition);
+                    //     if (!isValidPosition)
+                    //     {
+                    //         Console.WriteLine("Invalid ship position. Please try again.");
+                    //         ship.Positions.Clear(); // Clear invalid positions.
+                    //         i = 1;
+                    //     }
+                    // }
+                    // while (!isValidPosition);
                     telemetryClient.TrackEvent("Player_PlaceShipPosition", new Dictionary<string, string>() { { "Position", position }, { "Ship", ship.Name }, { "PositionInShip", i.ToString() } });
                 }
             }
