@@ -1,12 +1,12 @@
 ﻿
 namespace Battleship.Ascii
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Battleship.Ascii.TelemetryClient;
     using Battleship.GameController;
     using Battleship.GameController.Contracts;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class Program
     {
@@ -19,7 +19,7 @@ namespace Battleship.Ascii
         static void Main()
         {
             telemetryClient = new ApplicationInsightsTelemetryClient();
-            telemetryClient.TrackEvent("ApplicationStarted", new Dictionary<string, string> { { "Technology", ".NET"} });
+            telemetryClient.TrackEvent("ApplicationStarted", new Dictionary<string, string> { { "Technology", ".NET" } });
 
             try
             {
@@ -51,7 +51,7 @@ namespace Battleship.Ascii
                 Console.WriteLine("A serious problem occured. The application cannot continue and will be closed.");
                 telemetryClient.TrackException(e);
                 Console.WriteLine("");
-                Console.WriteLine("Error details:");      
+                Console.WriteLine("Error details:");
                 throw new Exception("Fatal error", e);
             }
 
@@ -76,7 +76,7 @@ namespace Battleship.Ascii
                 Console.WriteLine();
                 Console.WriteLine("Player, it's your turn");
                 Console.WriteLine("Enter coordinates for your shot :");
-                var position = ParsePosition(Console.ReadLine());                
+                var position = ParsePosition(Console.ReadLine());
                 var isHit = GameController.CheckIsHit(enemyFleet, position);
                 telemetryClient.TrackEvent("Player_ShootPosition", new Dictionary<string, string>() { { "Position", position.ToString() }, { "IsHit", isHit.ToString() } });
                 if (isHit)
@@ -151,13 +151,14 @@ namespace Battleship.Ascii
 
             foreach (var ship in myFleet)
             {
-                Console.WriteLine();
-                Console.WriteLine("Please enter the positions for the {0} (size: {1})", ship.Name, ship.Size);
+
+                // Console.WriteLine();
+                // Console.WriteLine("Please enter the positions for the {0} (size: {1})", ship.Name, ship.Size);
                 
-                for (var i = 1; i <= ship.Size; i++)
-                {
-                    // bool isValidPosition = false;
-                    string position;
+                // for (var i = 1; i <= ship.Size; i++)
+                // {
+                //     // bool isValidPosition = false;
+                //     string position;
 
                     // do
                     // {
@@ -176,8 +177,34 @@ namespace Battleship.Ascii
                     //     }
                     // }
                     // while (!isValidPosition);
+                CreateShip(ship);
+            }
+        }
+
+        private static void CreateShip(Ship ship)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Please enter the positions for the {0} (size: {1})", ship.Name, ship.Size);
+            for (var i = 1; i <= ship.Size; i++)
+            {
+                Console.WriteLine("Enter position {0} of {1} (i.e A3):", i, ship.Size);
+                var position = Console.ReadLine();
+                try
+                {
+                    ship.AddPosition(position);
                     telemetryClient.TrackEvent("Player_PlaceShipPosition", new Dictionary<string, string>() { { "Position", position }, { "Ship", ship.Name }, { "PositionInShip", i.ToString() } });
                 }
+                catch (Exception)
+                {
+                    Console.WriteLine("Invalid co-ordinate, please try again.");
+                    i--;
+                }
+            }
+            if (!GameController.IsShipValid(ship))
+            {
+                Console.WriteLine("Invalid ship placement, please try again.");
+                ship.Positions.Clear();
+                CreateShip(ship);
             }
         }
 
