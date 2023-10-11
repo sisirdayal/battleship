@@ -16,7 +16,6 @@
         /// The ship is not valid.
         /// </summary>
         [TestCase(new object[] { "A1", "A2", "A3" }, ExpectedResult = true)]
-        // TODO: Re-Add these
         [TestCase(new object[] { "A1" }, ExpectedResult = false)]
         [TestCase(new object[] { "A1", "A2", "C6" }, ExpectedResult = false)]
         [TestCase(new object[] { "A1", "A3", "A4" }, ExpectedResult = false)]
